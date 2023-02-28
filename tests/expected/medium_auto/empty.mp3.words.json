@@ -4,8 +4,8 @@
     {
       "id": 0,
       "seek": 0,
-      "start": 0.02,
-      "end": 2.98,
+      "start": 0.06,
+      "end": 3.0,
       "text": " Thanks for watching!",
       "tokens": [
         50364,
@@ -13,30 +13,30 @@
         337,
         1976,
         0,
-        50514
+        50520
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.899906975882394,
+      "avg_logprob": -0.9005999565124512,
       "compression_ratio": 0.7142857142857143,
-      "no_speech_prob": 0.6660081148147583,
+      "no_speech_prob": 0.6659879088401794,
       "confidence": 0.372,
       "words": [
         {
           "text": "Thanks",
-          "start": 0.02,
-          "end": 0.26,
+          "start": 0.06,
+          "end": 1.48,
           "confidence": 0.06
         },
         {
           "text": "for",
-          "start": 0.26,
-          "end": 0.62,
+          "start": 1.48,
+          "end": 2.96,
           "confidence": 0.916
         },
         {
           "text": "watching!",
-          "start": 0.62,
-          "end": 2.98,
+          "start": 2.96,
+          "end": 3.0,
           "confidence": 0.936
         }
       ]

@@ -1,6 +1,6 @@
 __author__ = "Jérôme Louradour"
 __credits__ = ["Jérôme Louradour"]
-__license__ = "MIT"
+__license__ = "GPLv3"
 
 import unittest
 import sys
@@ -15,12 +15,13 @@ FAIL_IF_REFERENCE_NOT_FOUND = True
 GENERATE_NEW_ONLY = False
 GENERATE_ALL = False
 GENERATE_DEVICE_DEPENDENT = False
+SKIP_LONG_TEST_IF_CPU = True
 
 
 class TestHelper(unittest.TestCase):
 
     def skipLongTests(self):
-        return not torch.cuda.is_available()
+        return SKIP_LONG_TEST_IF_CPU and not torch.cuda.is_available()
 
     def setUp(self):
         self.maxDiff = None
@@ -46,10 +47,10 @@ class TestHelper(unittest.TestCase):
     def get_expected_path(self, fn=None, check=False):
         return self._get_path("tests/expected", fn, check=check)
 
-    def get_data_files(self, files=None, excluded_by_default=["apollo11.mp3", "music.mp4", "arabic.mp3"]):
+    def get_data_files(self, files=None, excluded_by_default=["apollo11.mp3", "music.mp4", "arabic.mp3", "japanese.mp3", "empty.wav"]):
         if files == None:
             files = os.listdir(self.get_data_path())
-            files = [f for f in files if f not in excluded_by_default]
+            files = [f for f in files if f not in excluded_by_default and not f.endswith("json")]
             files = sorted(files)
         return [self.get_data_path(fn) for fn in files]
 
@@ -57,10 +58,10 @@ class TestHelper(unittest.TestCase):
         for ext in extensions:
             yield os.path.join(output_path, os.path.basename(input_filename) + "." + ext.lstrip("."))
 
-    def main_script(self):
-        main_script = self.get_main_path("transcribe.py", check=False)
+    def main_script(self, pyscript = "transcribe.py", exename = "whisper_timestamped"):
+        main_script = self.get_main_path(pyscript, check=False)
         if not os.path.exists(main_script):
-            main_script = "whisper_timestamped"
+            main_script = exename
         return main_script
 
     def assertRun(self, cmd):
@@ -157,6 +158,9 @@ class TestHelper(unittest.TestCase):
                 content = json.load(f)
             with open(reference) as f:
                 reference_content = json.load(f)
+            if "language" in content and "language" in reference_content:
+                content["language"] = self.norm_language(content["language"])
+                reference_content["language"] = self.norm_language(reference_content["language"])
             self.assertClose(content, reference_content,
                              msg=f"File {file} does not match reference {reference}")
             return
@@ -194,6 +198,12 @@ class TestHelper(unittest.TestCase):
         import torch
         return "cpu" if not torch.cuda.is_available() else "cuda"
 
+    def norm_language(self, language):
+        # Cheap custom stuff to avoid importing everything
+        return {
+            "japanese": "ja",
+        }.get(language.lower(), language)
+
 
 class TestHelperCli(TestHelper):
 
@@ -217,8 +227,7 @@ class TestHelperCli(TestHelper):
             # Butterfly effect: Results are different depending on the device for long files
             duration = self.get_audio_duration(input_filename)
             if device_specific is None:
-                device_dependent = duration > 60 or (
-                    duration > 30 and "tiny_fr" in name)
+                device_dependent = duration > 60 or (duration > 30 and "tiny_fr" in name) or ("empty" in input_filename and "medium_auto" in name)
             else:
                 device_dependent = device_specific
             name_ = name
@@ -329,6 +338,16 @@ class TestTranscribeCornerCases(TestHelperCli):
             prefix="stucked_lm",
         )
 
+    def test_punctuation_only(self):
+
+        # When there is only a punctuation detected in a segment, it could cause issue #24
+        self._test_cli_(
+            ["--model", "medium.en", "--efficient", "--punctuations", "False"],
+            "corner_cases",
+            files=["empty.wav"],
+            prefix="issue24",
+        )
+
     def test_temperature(self):
 
         self._test_cli_(
@@ -350,6 +369,7 @@ class TestTranscribeCornerCases(TestHelperCli):
         )
 
     def test_not_conditioned(self):
+
         if not os.path.exists(self.get_data_path("music.mp4", check=False)):
             return
         if self.skipLongTests():
@@ -389,9 +409,20 @@ class TestTranscribeCornerCases(TestHelperCli):
                 files=["arabic.mp3"]
             )
 
+    def test_gloria(self):
+
+        for model in ["medium", "large-v2"]:
+            for dec in ["efficient", "accurate"]:
+                self._test_cli_(
+                    ["--model", model, "--language", "en", "--" + dec],
+                    "corner_cases",
+                    files=["gloria.mp3"],
+                    prefix=model + "." + dec,
+                )
+
 class TestTranscribeMonolingual(TestHelperCli):
 
-    def test_monolingual(self):
+    def test_monolingual_tiny(self):
 
         files = ["bonjour_vous_allez_bien.mp3"]
 
@@ -409,6 +440,55 @@ class TestTranscribeMonolingual(TestHelperCli):
             prefix="accurate",
         )
 
+        self._test_cli_(
+            ["--model", "tiny.en", "--condition", "False", "--efficient"],
+            "tiny.en",
+            files=files,
+            prefix="nocond",
+        )
+
+    def test_monolingual_small(self):
+
+        self._test_cli_(
+            ["--model", "small.en", "--condition", "True", "--efficient"],
+            "small.en",
+            files=["arabic.mp3"],
+            device_specific=True,
+        )
+
+class TestTranscribeUnspacedLanguage(TestHelperCli):
+
+    def test_japanese(self):
+
+        self._test_cli_(
+            ["--model", "tiny", "--efficient"],
+            "tiny_auto",
+            files=["japanese.mp3"],
+            device_specific=True,
+        )
+
+        self._test_cli_(
+            ["--model", "tiny", "--language", "Japanese", "--efficient"],
+            "tiny_auto",
+            files=["japanese.mp3"],
+            device_specific=True,
+        )
+
+        self._test_cli_(
+            ["--model", "tiny", "--accurate"],
+            "tiny_auto",
+            files=["japanese.mp3"],
+            prefix="accurate",
+            device_specific=True,
+        )
+
+        self._test_cli_(
+            ["--model", "tiny", "--language", "Japanese", "--accurate"],
+            "tiny_auto",
+            files=["japanese.mp3"],
+            prefix="accurate",
+            device_specific=True,
+        )
 
 class TestTranscribeFormats(TestHelperCli):
 
@@ -467,6 +547,38 @@ class TestTranscribeFormats(TestHelperCli):
             device_specific=True,
         )
 
+class TestMakeSubtitles(TestHelper):
+
+    def test_make_subtitles(self):
+
+        main_script = self.main_script("make_subtitles.py", "whisper_timestamped_make_subtitles")
+
+        inputs = [
+            self.get_data_path("smartphone.mp3.words.json"),
+            self.get_data_path("no_punctuations.mp3.words.json", check=True),
+            self.get_data_path("yes_punctuations.mp3.words.json", check=True),
+        ]
+
+        for i, input in enumerate(inputs):
+            filename = os.path.basename(input).replace(".words.json", "")
+            for len in 6, 20, 50:
+                output_dir = self.get_output_path()
+                self.assertRun([main_script, 
+                    input if i > 0 else self.get_data_path(), output_dir,
+                    "--max_length", str(len),
+                ])
+                for format in "vtt", "srt",:
+                    output_file = os.path.join(output_dir, f"{filename}.{format}")
+                    self.assertTrue(os.path.isfile(output_file), msg=f"File {output_file} not found")
+                    expected_file = f"split_subtitles/{filename.split('_')[-1]}_{len}.{format}"
+                    self.assertNonRegression(output_file, expected_file)
+                    os.remove(output_file)
+                    self.assertRun([main_script, 
+                        input, output_file,
+                        "--max_length", str(len),
+                    ])
+                    self.assertTrue(os.path.isfile(output_file), msg=f"File {output_file} not found")
+                    self.assertNonRegression(output_file, expected_file)
 
 # "ZZZ" to run this test at last (because it will fill the CUDA with some memory)
 class TestZZZPythonImport(TestHelper):
@@ -519,6 +631,22 @@ class TestZZZPythonImport(TestHelper):
         self.assertEqual(
             split_tokens_on_spaces(tokens, tokenizer),
             (['<|0.00|>', 'So,', 'uh,', 'I', 'guess,', 'uh,', 'wherever', 'you', 'come', 'up', 'with,', 'just', 'let', 'us', 'know.', '<|7.00|>'],
+                [['<|0.00|>'],
+                [' ', 'So', ','],
+                [' uh', ','],
+                [' I'],
+                [' guess', ','],
+                [' uh', ','],
+                [' wherever'],
+                [' you'],
+                [' come'],
+                [' up', ' '],
+                [' with', ',', ' '],
+                [' just'],
+                [' let'],
+                [' us'],
+                [' know', '.', ' '],
+                ['<|7.00|>']],
              [[50364],
                 [220, 6455, 11],
                 [2232, 11], [286], [2041, 11], [
@@ -529,4 +657,27 @@ class TestZZZPythonImport(TestHelper):
                 [458, 13, 220],
                 [50714]
               ])
+        )
+
+        # Tokens that could be removed
+        tokens = [50364, 6024, 95, 8848, 7649, 8717, 38251, 11703, 3224, 51864]
+        self.assertEqual(
+            split_tokens_on_spaces(tokens, tokenizer),
+            (['<|0.00|>', 'الآذان', 'نسمّه', '<|30.00|>'],
+                [['<|0.00|>'], ['', ' الآ', 'ذ', 'ان'], [' ن', 'سم', 'ّ', 'ه'], ['<|30.00|>']],
+                [[50364], [6024, 95, 8848, 7649], [8717, 38251, 11703, 3224], [51864]]
+            )
+        )
+
+        tokenizer = whisper.tokenizer.get_tokenizer(False, language="en")
+
+        # Just a punctuation character
+        tokens = [50363, 764, 51813]
+
+        self.assertEqual(
+            split_tokens_on_spaces(tokens, tokenizer),
+            (['<|0.00|>', '.', '<|29.00|>'],
+                [['<|0.00|>'], ['.'], ['<|29.00|>']],
+                [[50363], [764], [51813]]
+            )
         )

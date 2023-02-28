@@ -4,8 +4,8 @@
     {
       "id": 0,
       "seek": 0,
-      "start": 2.82,
-      "end": 7.46,
+      "start": 0.36,
+      "end": 7.48,
       "text": " حبّي أنصار الهدى",
       "tokens": [
         11331,
@@ -21,27 +21,27 @@
         7578
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.5129431700095152,
+      "avg_logprob": -0.5114293709779397,
       "compression_ratio": 1.1842105263157894,
-      "no_speech_prob": 0.7975450158119202,
-      "confidence": 0.65,
+      "no_speech_prob": 0.7993651032447815,
+      "confidence": 0.651,
       "words": [
         {
           "text": "حبّي",
-          "start": 2.82,
-          "end": 4.44,
-          "confidence": 0.435
+          "start": 0.36,
+          "end": 4.28,
+          "confidence": 0.436
         },
         {
           "text": "أنصار",
-          "start": 4.44,
-          "end": 5.84,
+          "start": 4.28,
+          "end": 5.72,
           "confidence": 0.795
         },
         {
           "text": "الهدى",
-          "start": 5.84,
-          "end": 7.46,
+          "start": 5.72,
+          "end": 7.48,
           "confidence": 0.837
         }
       ]
@@ -49,8 +49,8 @@
     {
       "id": 1,
       "seek": 0,
-      "start": 10.9,
-      "end": 15.16,
+      "start": 7.5,
+      "end": 15.22,
       "text": " حبّي ركب الفدا",
       "tokens": [
         11331,
@@ -64,36 +64,36 @@
         28259
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.5129431700095152,
+      "avg_logprob": -0.5114293709779397,
       "compression_ratio": 1.1842105263157894,
-      "no_speech_prob": 0.7975450158119202,
-      "confidence": 0.828,
+      "no_speech_prob": 0.7993651032447815,
+      "confidence": 0.829,
       "words": [
         {
           "text": "حبّي",
-          "start": 10.9,
-          "end": 12.66,
-          "confidence": 0.874
+          "start": 7.5,
+          "end": 12.58,
+          "confidence": 0.875
         },
         {
           "text": "ركب",
-          "start": 12.66,
-          "end": 13.92,
+          "start": 12.58,
+          "end": 13.76,
           "confidence": 0.853
         },
         {
           "text": "الفدا",
-          "start": 13.92,
-          "end": 15.16,
-          "confidence": 0.71
+          "start": 13.76,
+          "end": 15.22,
+          "confidence": 0.711
         }
       ]
     },
     {
       "id": 2,
       "seek": 0,
-      "start": 18.92,
-      "end": 23.48,
+      "start": 15.5,
+      "end": 23.44,
       "text": " وطلّبي سأر الشاهد",
       "tokens": [
         4032,
@@ -109,36 +109,36 @@
         3215
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.5129431700095152,
+      "avg_logprob": -0.5114293709779397,
       "compression_ratio": 1.1842105263157894,
-      "no_speech_prob": 0.7975450158119202,
-      "confidence": 0.586,
+      "no_speech_prob": 0.7993651032447815,
+      "confidence": 0.587,
       "words": [
         {
           "text": "وطلّبي",
-          "start": 18.92,
-          "end": 20.74,
+          "start": 15.5,
+          "end": 20.68,
           "confidence": 0.54
         },
         {
           "text": "سأر",
-          "start": 20.74,
-          "end": 21.82,
+          "start": 20.68,
+          "end": 21.78,
           "confidence": 0.94
         },
         {
           "text": "الشاهد",
-          "start": 21.82,
-          "end": 23.48,
-          "confidence": 0.419
+          "start": 21.78,
+          "end": 23.44,
+          "confidence": 0.421
         }
       ]
     },
     {
       "id": 3,
       "seek": 2300,
-      "start": 24.24,
-      "end": 28.94,
+      "start": 23.46,
+      "end": 28.92,
       "text": " وطلّبي سأر الشاهد",
       "tokens": [
         4032,
@@ -154,27 +154,27 @@
         3215
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.20676150250790723,
+      "avg_logprob": -0.20691199800861415,
       "compression_ratio": 1.3675213675213675,
-      "no_speech_prob": 0.00013251970813143998,
+      "no_speech_prob": 0.00013251384370960295,
       "confidence": 0.883,
       "words": [
         {
           "text": "وطلّبي",
-          "start": 24.24,
-          "end": 26.06,
+          "start": 23.46,
+          "end": 25.98,
           "confidence": 0.811
         },
         {
           "text": "سأر",
-          "start": 26.06,
-          "end": 27.18,
+          "start": 25.98,
+          "end": 27.12,
           "confidence": 0.959
         },
         {
           "text": "الشاهد",
-          "start": 27.18,
-          "end": 28.94,
+          "start": 27.12,
+          "end": 28.92,
           "confidence": 0.938
         }
       ]
@@ -182,8 +182,8 @@
     {
       "id": 4,
       "seek": 2300,
-      "start": 30.92,
-      "end": 33.36,
+      "start": 30.5,
+      "end": 33.34,
       "text": " لمتى سنضل رقودا",
       "tokens": [
         32767,
@@ -198,36 +198,36 @@
         995
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.20676150250790723,
+      "avg_logprob": -0.20691199800861415,
       "compression_ratio": 1.3675213675213675,
-      "no_speech_prob": 0.00013251970813143998,
-      "confidence": 0.698,
+      "no_speech_prob": 0.00013251384370960295,
+      "confidence": 0.697,
       "words": [
         {
           "text": "لمتى",
-          "start": 30.92,
-          "end": 31.64,
+          "start": 30.5,
+          "end": 31.5,
           "confidence": 0.66
         },
         {
           "text": "سنضل",
-          "start": 31.64,
-          "end": 32.42,
-          "confidence": 0.752
+          "start": 31.5,
+          "end": 32.34,
+          "confidence": 0.75
         },
         {
           "text": "رقودا",
-          "start": 32.42,
-          "end": 33.36,
-          "confidence": 0.666
+          "start": 32.34,
+          "end": 33.34,
+          "confidence": 0.665
         }
       ]
     },
     {
       "id": 5,
       "seek": 2300,
-      "start": 33.6,
-      "end": 35.92,
+      "start": 33.34,
+      "end": 35.9,
       "text": " نغرق في النوم ونشخر",
       "tokens": [
         8717,
@@ -243,33 +243,33 @@
         34740
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.20676150250790723,
+      "avg_logprob": -0.20691199800861415,
       "compression_ratio": 1.3675213675213675,
-      "no_speech_prob": 0.00013251970813143998,
+      "no_speech_prob": 0.00013251384370960295,
       "confidence": 0.931,
       "words": [
         {
           "text": "نغرق",
-          "start": 33.6,
-          "end": 34.28,
+          "start": 33.34,
+          "end": 34.22,
           "confidence": 0.904
         },
         {
           "text": "في",
-          "start": 34.28,
-          "end": 34.5,
-          "confidence": 0.885
+          "start": 34.22,
+          "end": 34.46,
+          "confidence": 0.884
         },
         {
           "text": "النوم",
-          "start": 34.5,
-          "end": 35.12,
+          "start": 34.46,
+          "end": 35.06,
           "confidence": 0.976
         },
         {
           "text": "ونشخر",
-          "start": 35.12,
-          "end": 35.92,
+          "start": 35.06,
+          "end": 35.9,
           "confidence": 0.948
         }
       ]
@@ -277,7 +277,7 @@
     {
       "id": 6,
       "seek": 2300,
-      "start": 36.28,
+      "start": 36.26,
       "end": 38.48,
       "text": " وعن الآذان نسمّه",
       "tokens": [
@@ -294,36 +294,36 @@
         3224
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.20676150250790723,
+      "avg_logprob": -0.20691199800861415,
       "compression_ratio": 1.3675213675213675,
-      "no_speech_prob": 0.00013251970813143998,
-      "confidence": 0.784,
+      "no_speech_prob": 0.00013251384370960295,
+      "confidence": 0.783,
       "words": [
         {
           "text": "وعن",
-          "start": 36.28,
-          "end": 36.84,
+          "start": 36.26,
+          "end": 36.78,
           "confidence": 0.911
         },
         {
           "text": "الآذان",
-          "start": 36.84,
-          "end": 37.78,
+          "start": 36.78,
+          "end": 37.72,
           "confidence": 0.811
         },
         {
           "text": "نسمّه",
-          "start": 37.78,
+          "start": 37.72,
           "end": 38.48,
-          "confidence": 0.677
+          "confidence": 0.676
         }
       ]
     },
     {
       "id": 7,
       "seek": 3800,
-      "start": 38.64,
-      "end": 41.26,
+      "start": 38.54,
+      "end": 41.34,
       "text": " ونغمّض كي لا نحسر",
       "tokens": [
         50364,
@@ -343,34 +343,34 @@
         51114
       ],
       "temperature": 0.0,
-      "avg_logprob": -0.21340444684028625,
+      "avg_logprob": -0.21256008744239807,
       "compression_ratio": 0.775,
-      "no_speech_prob": 0.0008962159045040607,
-      "confidence": 0.805,
+      "no_speech_prob": 0.0009103076881729066,
+      "confidence": 0.806,
       "words": [
         {
           "text": "ونغمّض",
-          "start": 38.64,
-          "end": 39.9,
-          "confidence": 0.918
+          "start": 38.54,
+          "end": 39.88,
+          "confidence": 0.919
         },
         {
           "text": "كي",
-          "start": 39.9,
-          "end": 40.32,
-          "confidence": 0.764
+          "start": 39.88,
+          "end": 40.28,
+          "confidence": 0.766
         },
         {
           "text": "لا",
-          "start": 40.32,
-          "end": 40.66,
-          "confidence": 0.827
+          "start": 40.28,
+          "end": 40.56,
+          "confidence": 0.826
         },
         {
           "text": "نحسر",
-          "start": 40.66,
-          "end": 41.26,
-          "confidence": 0.673
+          "start": 40.56,
+          "end": 41.34,
+          "confidence": 0.674
         }
       ]
     }

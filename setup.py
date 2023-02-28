@@ -25,12 +25,15 @@ setup(
     description="Add to OpenAI Whisper the capability to give word timestamps",
     python_requires=">=3.7",
     author="Jeronymous",
-    url="https://github.com/Jeronymous/whisper-timestamped",
+    url="https://github.com/linto-ai/whisper-timestamped",
     license=license,
     packages=find_packages(exclude=["tests*"]),
     install_requires=install_requires,
     entry_points = {
-        'console_scripts': ['whisper_timestamped=whisper_timestamped.transcribe:cli'],
+        'console_scripts': [
+            'whisper_timestamped=whisper_timestamped.transcribe:cli',
+            'whisper_timestamped_make_subtitles=whisper_timestamped.make_subtitles:cli'
+        ],
     },
     include_package_data=True,
     extras_require={'dev': ['matplotlib']},
